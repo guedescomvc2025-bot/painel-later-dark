@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PAINEL LATERAL DARK | VERIFICADOR DE PAINÉIS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --neon-green: #0afc05;
+      --neon-blue: #05fcf4;
+      --neon-purple: #bc13fe;
+      --dark-bg: #0a0a12;
+      --darker-bg: #050508;
+      --panel-bg: rgba(10, 20, 15, 0.7);
+      --text-color: #e0e0ff;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-color);
+      min-height: 100vh;
+      padding: 2rem;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(11, 218, 81, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 80% 70%, rgba(188, 19, 254, 0.1) 0%, transparent 20%),
+        linear-gradient(to bottom, var(--darker-bg), var(--dark-bg));
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(135deg, rgba(10, 252, 5, 0.03) 25%, transparent 25%) -50px 0,
+        linear-gradient(225deg, rgba(10, 252, 5, 0.03) 25%, transparent 25%) -50px 0,
+        linear-gradient(315deg, rgba(10, 252, 5, 0.03) 25%, transparent 25%),
+        linear-gradient(45deg, rgba(10, 252, 5, 0.03) 25%, transparent 25%);
+      background-size: 100px 100px;
+      z-index: -1;
+      opacity: 0.5;
+    }
+    
+    .glow {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.3;
+      z-index: -1;
+    }
+    
+    .glow-1 {
+      background: var(--neon-green);
+      top: -100px;
+      left: -100px;
+      animation: float 15s ease-in-out infinite;
+    }
+    
+    .glow-2 {
+      background: var(--neon-blue);
+      bottom: -100px;
+      right: -100px;
+      animation: float 18s ease-in-out infinite reverse;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      25% { transform: translate(50px, 50px); }
+      50% { transform: translate(0, 100px); }
+      75% { transform: translate(-50px, 50px); }
+    }
+    
+    h1 {
+      text-align: center;
+      margin: 1rem 0 2rem;
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px var(--neon-green), 0 0 20px rgba(10, 252, 5, 0.5);
+      font-size: 2.2rem;
+      letter-spacing: 2px;
+      position: relative;
+      padding-bottom: 1rem;
+    }
+    
+    h1::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 25%;
+      right: 25%;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--neon-green), transparent);
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--panel-bg);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 0 30px rgba(10, 252, 5, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(10, 252, 5, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .container:hover {
+      box-shadow: 0 0 40px rgba(10, 252, 5, 0.2);
+      border-color: rgba(10, 252, 5, 0.2);
+    }
+    
+    label {
+      display: block;
+      margin-top: 1.5rem;
+      font-weight: bold;
+      color: var(--neon-blue);
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+    }
+    
+    .input-group {
+      position: relative;
+      margin-top: 0.5rem;
+    }
+    
+    .input-group::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--neon-green), var(--neon-blue));
+      opacity: 0.5;
+      transition: all 0.3s ease;
+    }
+    
+    .input-group:focus-within::after {
+      opacity: 1;
+      height: 3px;
+    }
+    
+    input[type="text"], input[type="file"], select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 6px 6px 0 0;
+      border: none;
+      background: rgba(15, 25, 30, 0.7);
+      color: var(--text-color);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    
+    input[type="text"]:focus, input[type="file"]:focus, select:focus {
+      outline: none;
+      background: rgba(20, 35, 40, 0.8);
+      box-shadow: 0 0 15px rgba(10, 252, 5, 0.2);
+    }
+    
+    .m3u-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    
+    #m3uInput {
+      flex: 1;
+    }
+    
+    #btnGroup {
+      margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    button {
+      position: relative;
+      margin-top: 0;
+      padding: 0.8rem 1.8rem;
+      border: none;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      z-index: 1;
+      letter-spacing: 0.5px;
+    }
+    
+    button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--neon-green), var(--neon-blue));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: -1;
+    }
+    
+    button:hover::before {
+      opacity: 1;
+    }
+    
+    #startBtn {
+      background-color: var(--neon-green);
+      color: #002200;
+      box-shadow: 0 0 15px rgba(10, 252, 5, 0.5);
+    }
+    
+    #startBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(10, 252, 5, 0.8);
+    }
+    
+    #stopBtn {
+      background-color: var(--neon-purple);
+      color: #f0f0ff;
+      box-shadow: 0 0 15px rgba(188, 19, 254, 0.5);
+    }
+    
+    #stopBtn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 0 20px rgba(188, 19, 254, 0.8);
+    }
+    
+    #copyBtn, #downloadBtn {
+      background-color: rgba(30, 30, 50, 0.8);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+    }
+    
+    #copyBtn:hover:not(:disabled), #downloadBtn:hover:not(:disabled) {
+      background-color: rgba(10, 252, 244, 0.1);
+      box-shadow: 0 0 15px rgba(5, 252, 244, 0.5);
+      transform: translateY(-2px);
+    }
+    
+    button:disabled {
+      background-color: rgba(30, 30, 40, 0.5);
+      color: #555;
+      cursor: not-allowed;
+      box-shadow: none;
+      border: 1px solid rgba(80, 80, 100, 0.3);
+    }
+    
+    button:disabled::before {
+      opacity: 0;
+    }
+    
+    #checkM3UBtn {
+      padding: 0.8rem 1.5rem;
+      background-color: rgba(30, 30, 50, 0.8);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+      min-width: 140px;
+      transition: all 0.3s ease;
+    }
+    
+    #checkM3UBtn.checking {
+      background-color: rgba(255, 165, 0, 0.2);
+      color: #ffa500;
+      border-color: #ffa500;
+      animation: pulseOrange 1.5s infinite;
+    }
+    
+    #checkM3UBtn.active {
+      background-color: rgba(10, 252, 5, 0.1);
+      color: var(--neon-green);
+      border-color: var(--neon-green);
+      animation: pulseGreen 2s infinite;
+    }
+    
+    #checkM3UBtn.inactive {
+      background-color: rgba(255, 50, 50, 0.1);
+      color: #ff3232;
+      border-color: #ff3232;
+      animation: pulseRed 2s infinite;
+    }
+    
+    @keyframes pulseGreen {
+      0%, 100% { box-shadow: 0 0 5px rgba(10, 252, 5, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(10, 252, 5, 0.8); }
+    }
+    
+    @keyframes pulseOrange {
+      0%, 100% { box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(255, 165, 0, 0.8); }
+    }
+    
+    @keyframes pulseRed {
+      0%, 100% { box-shadow: 0 0 5px rgba(255, 50, 50, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(255, 50, 50, 0.8); }
+    }
+    
+    #progress {
+      margin-top: 1.5rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--neon-blue);
+      text-align: center;
+      padding: 0.8rem;
+      background: rgba(5, 252, 244, 0.1);
+      border-radius: 6px;
+      border-left: 3px solid var(--neon-blue);
+      animation: progressPulse 3s infinite;
+    }
+    
+    @keyframes progressPulse {
+      0%, 100% { border-left-color: var(--neon-blue); }
+      50% { border-left-color: var(--neon-green); }
+    }
+    
+    #validList {
+      margin-top: 1.5rem;
+      background: rgba(10, 20, 25, 0.7);
+      padding: 1.5rem;
+      max-height: 500px;
+      overflow-y: auto;
+      border-radius: 8px;
+      border: 1px solid rgba(10, 252, 5, 0.2);
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    #validList::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    #validList::-webkit-scrollbar-track {
+      background: rgba(10, 20, 25, 0.5);
+      border-radius: 4px;
+    }
+    
+    #validList::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--neon-green), var(--neon-blue));
+      border-radius: 4px;
+    }
+    
+    .panel-header {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--neon-green);
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+    
+    .server-panel {
+      margin-bottom: 1.5rem;
+      padding: 1.2rem;
+      background: rgba(15, 25, 30, 0.6);
+      border-radius: 8px;
+      border-left: 3px solid var(--neon-green);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .server-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--neon-green), transparent);
+      box-shadow: 0 0 10px var(--neon-green);
+    }
+    
+    .server-panel:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(10, 252, 5, 0.3);
+      border-left-color: var(--neon-blue);
+    }
+    
+    .server-info {
+      font-family: 'Courier New', monospace;
+      color: var(--text-color);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    
+    .server-info span {
+      color: var(--neon-blue);
+      font-weight: bold;
+    }
+    
+    .panel-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 1rem;
+    }
+    
+    .panel-actions button {
+      flex: 1;
+      padding: 0.6rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .verify-btn {
+      background: rgba(5, 252, 244, 0.1);
+      color: var(--neon-blue);
+      border: 1px solid var(--neon-blue);
+    }
+    
+    .verify-btn:hover {
+      background: rgba(5, 252, 244, 0.2);
+      box-shadow: 0 0 15px rgba(5, 252, 244, 0.5);
+    }
+    
+    .download-btn {
+      background: rgba(10, 252, 5, 0.1);
+      color: var(--neon-green);
+      border: 1px solid var(--neon-green);
+    }
+    
+    .download-btn:hover {
+      background: rgba(10, 252, 5, 0.2);
+      box-shadow: 0 0 15px rgba(10, 252, 5, 0.5);
+    }
+    
+    #footerSection {
+      margin-top: 3rem;
+      padding: 1.5rem;
+      border-top: 1px solid rgba(10, 252, 5, 0.3);
+      text-align: center;
+      color: var(--neon-blue);
+      font-size: 0.95rem;
+      position: relative;
+    }
+    
+    #footerSection::before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--neon-blue), transparent);
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+    
+    #footerSection div:first-child {
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+      letter-spacing: 1px;
+    }
+    
+    #footerSection a {
+      color: var(--neon-blue);
+      text-decoration: none;
+      font-weight: bold;
+      margin: 0 0.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      padding-bottom: 2px;
+    }
+    
+    #footerSection a::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--neon-blue);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    
+    #footerSection a:hover {
+      color: var(--neon-green);
+      text-shadow: 0 0 5px var(--neon-green);
+    }
+    
+    #footerSection a:hover::after {
+      transform: scaleX(1);
+    }
+    
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    /* Efeito de digitação */
+    .typing-effect {
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--neon-green);
+      animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+    }
+    
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: var(--neon-green); }
+    }
+    
+    /* Responsividade */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+      
+      .container {
+        padding: 1.5rem;
+      }
+      
+      #btnGroup {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+      
+      .panel-actions {
+        flex-direction: column;
+      }
+    }
+    
+    /* Efeito de notificação */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background: rgba(10, 20, 25, 0.9);
+      color: var(--neon-green);
+      border-left: 4px solid var(--neon-green);
+      border-radius: 4px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transform: translateX(200%);
+      transition: transform 0.3s ease;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.error {
+      color: #ff3232;
+      border-left-color: #ff3232;
+    }
+    
+    .notification.success {
+      color: var(--neon-green);
+      border-left-color: var(--neon-green);
+    }
+    
+    .notification.warning {
+      color: #ffa500;
+      border-left-color: #ffa500;
+    }
+    
+    .notification-icon {
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Efeitos de fundo neon -->
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+  
+  <!-- Container principal -->
+  <div class="container">
+    <h1>PAINEL LATERAL DARK <span class="pulse">⚡</span></h1>
+    
+    <label for="fileInput">📁 Selecione arquivos TXT com servidores (pode ser vários):</label>
+    <div class="input-group">
+      <input type="file" id="fileInput" multiple accept=".txt" />
+    </div>
+    
+    <label for="m3uInput">🔗 Cole o link M3U (contendo usuário e senha):</label>
+    <div class="m3u-container">
+      <div class="input-group" style="flex: 1;">
+        <input type="text" id="m3uInput" placeholder="http://exemplo.com/get.php?username=USER&password=PASS&type=m3u_plus" />
+      </div>
+      <button id="checkM3UBtn" title="Verificar se o M3U está ativo">🔍 Verificar M3U</button>
+    </div>
+    
+    <label for="speedSelect">⚡ Velocidade da varredura (concorrência):</label>
+    <div class="input-group">
+      <select id="speedSelect">
+        <option value="5">🐢 Lento (5 simultâneos)</option>
+        <option value="10" selected>🚀 Médio (10 simultâneos)</option>
+        <option value="20">⚡ Rápido (20 simultâneos)</option>
+        <option value="50">🔥 Turbo (50 simultâneos)</option>
+      </select>
+    </div>
+    
+    <div id="btnGroup">
+      <button id="startBtn">🚀 Iniciar Varredura</button>
+      <button id="stopBtn" disabled>⏹️ Parar</button>
+      <button id="copyBtn" disabled>📋 Copiar Resultado</button>
+      <button id="downloadBtn" disabled>💾 Baixar Resultado</button>
+    </div>
+    
+    <div id="progress"></div>
+    
+    <div id="validList">
+      <div class="panel-header">🔍 Aguardando início da varredura...</div>
+    </div>
+    
+    <!-- Rodapé -->
+    <div id="footerSection">
+      <div>DESENVOLVIDO POR DARK MENSAGEIRO E HIDAN IMORTAL</div>
+      <div style="margin-top: 1rem;">GRUPOS OFICIAIS:</div>
+      <div>
+        <a href="https://t.me/LISTAIPTVGRATIS2025" target="_blank" rel="noopener noreferrer">📢 GRUPO TELEGRAM 1</a> |
+        <a href="https://t.me/MUNDO_DOS_BOTS" target="_blank" rel="noopener noreferrer">🤖 GRUPO TELEGRAM 2</a> |
+        <a href="https://t.me/+EilVL2nDETdlODQx" target="_blank" rel="noopener noreferrer">🔗 GRUPO TELEGRAM 3</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Notificação -->
+  <div id="notification" class="notification">
+    <span class="notification-icon">ℹ️</span>
+    <span class="notification-message"></span>
+  </div>
+  
+  <!-- Efeitos sonoros -->
+  <audio id="soundClick" src="https://assets.mixkit.co/sfx/preview/mixkit-modern-click-box-check-1120.mp3" preload="auto"></audio>
+  <audio id="soundSuccess" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
+  <audio id="soundError" src="https://assets.mixkit.co/sfx/preview/mixkit-warning-alarm-688.mp3" preload="auto"></audio>
+  <audio id="soundStart" src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-interface-hum-358.mp3" preload="auto"></audio>
+  <audio id="soundScan" src="https://assets.mixkit.co/sfx/preview/mixkit-digital-interface-ting-285.mp3" preload="auto"></audio>
+  
+  <script>
+  // Elementos DOM
+  const fileInput = document.getElementById("fileInput");
+  const m3uInput = document.getElementById("m3uInput");
+  const speedSelect = document.getElementById("speedSelect");
+  const startBtn = document.getElementById("startBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const copyBtn = document.getElementById("copyBtn");
+  const downloadBtn = document.getElementById("downloadBtn");
+  const progressDiv = document.getElementById("progress");
+  const validListDiv = document.getElementById("validList");
+  const checkM3UBtn = document.getElementById("checkM3UBtn");
+  const notification = document.getElementById("notification");
+  
+  // Elementos de áudio
+  const soundClick = document.getElementById("soundClick");
+  const soundSuccess = document.getElementById("soundSuccess");
+  const soundError = document.getElementById("soundError");
+  const soundStart = document.getElementById("soundStart");
+  const soundScan = document.getElementById("soundScan");
+  
+  // Variáveis de estado
+  let validServers = [];
+  let testedServers = 0;
+  let totalServers = 0;
+  let username = "";
+  let password = "";
+  let hostname = "";
+  let isRunning = false;
+  
+  // Função para mostrar notificação
+  function showNotification(message, type = "info", duration = 3000) {
+    const notificationIcon = notification.querySelector(".notification-icon");
+    const notificationMessage = notification.querySelector(".notification-message");
+    
+    // Definir ícone e classe com base no tipo
+    switch(type) {
+      case "success":
+        notificationIcon.textContent = "✅";
+        notification.className = "notification success";
+        soundSuccess.currentTime = 0;
+        soundSuccess.play();
+        break;
+      case "error":
+        notificationIcon.textContent = "❌";
+        notification.className = "notification error";
+        soundError.currentTime = 0;
+        soundError.play();
+        break;
+      case "warning":
+        notificationIcon.textContent = "⚠️";
+        notification.className = "notification warning";
+        break;
+      default:
+        notificationIcon.textContent = "ℹ️";
+        notification.className = "notification";
+        soundClick.currentTime = 0;
+        soundClick.play();
+    }
+    
+    notificationMessage.textContent = message;
+    notification.classList.add("show");
+    
+    // Esconder após a duração
+    setTimeout(() => {
+      notification.classList.remove("show");
+    }, duration);
+  }
+  
+  // Função para extrair usuário e senha da URL
+  function extrairUserPass(url) {
+    try {
+      const u = new URL(url);
+      const user = u.searchParams.get("username");
+      const pass = u.searchParams.get("password");
+      if (user && pass) return { user, pass, hostname: u.host };
+      return null;
+    } catch {
+      return null;
+    }
+  }
+  
+  // Função para ler servidores dos arquivos
+  async function lerServidores(files) {
+    const servidoresSet = new Set();
+    for (const file of files) {
+      const text = await file.text();
+      const linhas = text.split(/\r?\n/);
+      for (let linha of linhas) {
+        linha = linha.trim().replace(/[= ]+$/, "");
+        if (!linha) continue;
+        if (!/^https?:\/\//i.test(linha)) {
+          linha = "http://" + linha;
+        }
+        servidoresSet.add(linha);
+      }
+    }
+    return Array.from(servidoresSet);
+  }
+  
+  // Função para testar um servidor
+  async function testarServidor(servidor, user, pass) {
+    const url = `${servidor.replace(/\/+$/, "")}/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}`;
+    try {
+      const resp = await fetch(url, {
+        method: "GET",
+        headers: { "User-Agent": "Mozilla/5.0" },
+        cache: "no-cache"
+      });
+      if (!resp.ok) return false;
+      const json = await resp.json();
+      if (json.user_info && json.user_info.status === "Active") {
+        const ts = parseInt(json.user_info.exp_date);
+        if (!isNaN(ts)) {
+          const dt = new Date(ts * 1000);
+          return dt.toISOString().slice(0, 19).replace("T", " ");
+        }
+        return "Data não disponível";
+      }
+      return false;
+    } catch {
+      return false;
+    }
+  }
+  
+  // Função para montar link M3U
+  function montarLinkM3U(server, user, pass) {
+    return `${server.replace(/\/+$/, "")}/get.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&type=m3u_plus`;
+  }
+  
+  // Função para extrair domínio
+  function extrairDominio(hostnameWithPort) {
+    return hostnameWithPort.split(":")[0];
+  }
+  
+  // Função para baixar M3U
+  async function baixarM3U(url, nomeServidor, expDate = "") {
+    try {
+      showNotification(`Iniciando download do M3U: ${nomeServidor}`, "info");
+      
+      const response = await fetch(url, {
+        headers: { "User-Agent": "Mozilla/5.0" }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+      }
+      
+      const m3uContent = await response.text();
+      const filename = `M3U_${nomeServidor.replace(/[^a-z0-9]/gi, '_')}${expDate ? '_' + expDate.replace(/[^0-9]/g, '') : ''}.m3u8`;
+      
+      const blob = new Blob([m3uContent], { type: "application/x-mpegURL" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      showNotification(`M3U baixado com sucesso: ${filename}`, "success");
+      return true;
+    } catch (error) {
+      console.error("Erro ao baixar M3U:", error);
+      showNotification(`Erro ao baixar M3U: ${error.message}`, "error");
+      return false;
+    }
+  }
+  
+  // Função para criar botões de ação
+  function criarBotoesAcao(server, user, pass, expDate) {
+    const container = document.createElement("div");
+    container.className = "panel-actions";
+    
+    const verifyBtn = document.createElement("button");
+    verifyBtn.className = "verify-btn";
+    verifyBtn.innerHTML = '<span class="icon">🔍</span> Verificar M3U';
+    verifyBtn.onclick = async () => {
+      soundClick.currentTime = 0;
+      soundClick.play();
+      verifyBtn.disabled = true;
+      verifyBtn.innerHTML = '<span class="icon">⏳</span> Verificando...';
+      
+      const m3uUrl = montarLinkM3U(server, user, pass);
+      const result = await testarServidor(server, user, pass);
+      
+      if (result) {
+        showNotification(`M3U VÁLIDO - Expira em: ${result}`, "success");
+      } else {
+        showNotification("M3U INVÁLIDO ou erro na verificação", "error");
+      }
+      
+      verifyBtn.disabled = false;
+      verifyBtn.innerHTML = '<span class="icon">🔍</span> Verificar M3U';
+    };
+    
+    const downloadBtn = document.createElement("button");
+    downloadBtn.className = "download-btn";
+    downloadBtn.innerHTML = '<span class="icon">💾</span> Baixar M3U';
+    downloadBtn.onclick = async () => {
+      soundClick.currentTime = 0;
+      soundClick.play();
+      downloadBtn.disabled = true;
+      downloadBtn.innerHTML = '<span class="icon">⏳</span> Baixando...';
+      
+      const m3uUrl = montarLinkM3U(server, user, pass);
+      const nomeServidor = extrairDominio(new URL(server).hostname);
+      await baixarM3U(m3uUrl, nomeServidor, expDate);
+      
+      downloadBtn.disabled = false;
+      downloadBtn.innerHTML = '<span class="icon">💾</span> Baixar M3U';
+    };
+    
+    container.appendChild(verifyBtn);
+    container.appendChild(downloadBtn);
+    
+    return container;
+  }
+  
+  // Função para atualizar a lista de válidos
+  function atualizarListaValidos() {
+    const hostnameDomain = extrairDominio(hostname);
+    
+    let texto = `🤖 PAINEL LATERAL DARK - VERIFICADOR DE PAINÉIS 🤖\n`;
+    texto += `🔗 SERVIDOR M3U: ${hostnameDomain}\n`;
+    texto += `👤 USUÁRIO: ${username}\n`;
+    texto += `🔐 SENHA: ${password}\n\n`;
+    texto += `✅ PAINÉIS VÁLIDOS (MESMO USUÁRIO/SENHA):\n\n`;
+
+    validListDiv.innerHTML = "";
+    
+    // Cabeçalho
+    const header = document.createElement("div");
+    header.className = "panel-header typing-effect";
+    header.textContent = "PAINÉIS ENCONTRADOS";
+    validListDiv.appendChild(header);
+    
+    // Adiciona cada painel com seus botões
+    if (validServers.length === 0) {
+      const emptyMsg = document.createElement("div");
+      emptyMsg.className = "server-panel";
+      emptyMsg.innerHTML = '<div class="server-info">Nenhum painel válido encontrado até o momento...</div>';
+      validListDiv.appendChild(emptyMsg);
+    } else {
+      validServers.forEach((obj, i) => {
+        const baseURL = obj.server;
+        const linkCompleto = montarLinkM3U(baseURL, username, password);
+        const domain = extrairDominio(new URL(baseURL).hostname);
+        
+        const panelDiv = document.createElement("div");
+        panelDiv.className = "server-panel";
+        
+        const panelText = document.createElement("div");
+        panelText.className = "server-info";
+        panelText.innerHTML = `
+          <div>🌐 <strong>PAINEL ${i + 1}:</strong> <span>${domain}</span></div>
+          <div>🔗 <strong>URL:</strong> <span>${baseURL}</span></div>
+          <div>📆 <strong>EXPIRA EM:</strong> <span>${obj.expDate}</span></div>
+          <div>👤 <strong>USUÁRIO:</strong> <span>${username}</span></div>
+          <div>🔐 <strong>SENHA:</strong> <span>${password}</span></div>
+          <div>🔗 <strong>LINK M3U:</strong> <span>${linkCompleto}</span></div>
+        `;
+        
+        panelDiv.appendChild(panelText);
+        
+        // Adiciona os botões de ação
+        const botoesAcao = criarBotoesAcao(baseURL, username, password, obj.expDate);
+        panelDiv.appendChild(botoesAcao);
+        
+        validListDiv.appendChild(panelDiv);
+      });
+    }
+
+    if (validServers.length > 0) {
+      copyBtn.disabled = false;
+      downloadBtn.disabled = false;
+    } else {
+      copyBtn.disabled = true;
+      downloadBtn.disabled = true;
+    }
+  }
+  
+  // Função para copiar resultado
+  function copiarResultado() {
+    soundClick.currentTime = 0;
+    soundClick.play();
+    
+    const hostnameDomain = extrairDominio(hostname);
+    
+    let texto = `🤖 PAINEL LATERAL DARK - VERIFICADOR DE PAINÉIS 🤖\n`;
+    texto += `🔗 SERVIDOR M3U: ${hostnameDomain}\n`;
+    texto += `👤 USUÁRIO: ${username}\n`;
+    texto += `🔐 SENHA: ${password}\n\n`;
+    texto += `✅ PAINÉIS VÁLIDOS (MESMO USUÁRIO/SENHA):\n\n`;
+
+    validServers.forEach((obj, i) => {
+      const baseURL = obj.server;
+      const linkCompleto = montarLinkM3U(baseURL, username, password);
+      const domain = extrairDominio(new URL(baseURL).hostname);
+      
+      texto += `🌐 PAINEL ${i + 1}: ${domain}\n`;
+      texto += `🔗 URL: ${baseURL}\n`;
+      texto += `📆 EXPIRA EM: ${obj.expDate}\n`;
+      texto += `👤 USUÁRIO: ${username}\n`;
+      texto += `🔐 SENHA: ${password}\n`;
+      texto += `🔗 LINK M3U: ${linkCompleto}\n\n`;
+    });
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(texto)
+        .then(() => showNotification("Resultado copiado para a área de transferência!", "success"))
+        .catch(() => fallbackCopyText(texto));
+    } else {
+      fallbackCopyText(texto);
+    }
+  }
+  
+  // Fallback para copiar texto
+  function fallbackCopyText(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed";
+    textarea.style.top = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showNotification("Resultado copiado para a área de transferência!", "success");
+    } catch {
+      showNotification("Erro ao copiar. Selecione e copie manualmente do resultado.", "error");
+    }
+    document.body.removeChild(textarea);
+  }
+  
+  // Função para baixar resultado
+  function baixarResultado() {
+    soundClick.currentTime = 0;
+    soundClick.play();
+    
+    const hostnameDomain = extrairDominio(hostname);
+    
+    let texto = `🤖 PAINEL LATERAL DARK - VERIFICADOR DE PAINÉIS 🤖\n`;
+    texto += `🔗 SERVIDOR M3U: ${hostnameDomain}\n`;
+    texto += `👤 USUÁRIO: ${username}\n`;
+    texto += `🔐 SENHA: ${password}\n\n`;
+    texto += `✅ PAINÉIS VÁLIDOS (MESMO USUÁRIO/SENHA):\n\n`;
+
+    validServers.forEach((obj, i) => {
+      const baseURL = obj.server;
+      const linkCompleto = montarLinkM3U(baseURL, username, password);
+      const domain = extrairDominio(new URL(baseURL).hostname);
+      
+      texto += `🌐 PAINEL ${i + 1}: ${domain}\n`;
+      texto += `🔗 URL: ${baseURL}\n`;
+      texto += `📆 EXPIRA EM: ${obj.expDate}\n`;
+      texto += `👤 USUÁRIO: ${username}\n`;
+      texto += `🔐 SENHA: ${password}\n`;
+      texto += `🔗 LINK M3U: ${linkCompleto}\n\n`;
+    });
+
+    const blob = new Blob([texto], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `painel_lateral_dark_resultado_${new Date().toISOString().slice(0,10)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showNotification("Resultado baixado com sucesso!", "success");
+  }
+  
+  // Função para verificar M3U
+  async function verificarM3U(url) {
+    soundClick.currentTime = 0;
+    soundClick.play();
+    
+    checkM3UBtn.disabled = true;
+    checkM3UBtn.textContent = "Verificando...";
+    checkM3UBtn.classList.add("checking");
+    
+    const info = extrairUserPass(url);
+    if (!info) {
+      showNotification("URL M3U inválida ou faltando usuário/senha.", "error");
+      checkM3UBtn.disabled = false;
+      checkM3UBtn.textContent = "🔍 Verificar M3U";
+      checkM3UBtn.classList.remove("checking");
+      checkM3UBtn.classList.remove("active", "inactive");
+      return;
+    }
+    
+    try {
+      showNotification("Verificando M3U, aguarde...", "info");
+      soundScan.currentTime = 0;
+      soundScan.play();
+      
+      const teste = await testarServidor(`http://${info.hostname}`, info.user, info.pass);
+      if (teste) {
+        showNotification(`M3U ATIVO - Expira em: ${teste}`, "success");
+        checkM3UBtn.classList.add("active");
+        checkM3UBtn.classList.remove("inactive");
+        
+        // Perguntar se deseja baixar o M3U
+        setTimeout(() => {
+          if (confirm(`M3U verificado com sucesso! Expira em: ${teste}\n\nDeseja baixar o arquivo M3U agora?`)) {
+            const nomeServidor = extrairDominio(info.hostname);
+            baixarM3U(url, nomeServidor, teste);
+          }
+        }, 500);
+      } else {
+        showNotification("M3U INATIVO ou erro na resposta.", "error");
+        checkM3UBtn.classList.add("inactive");
+        checkM3UBtn.classList.remove("active");
+      }
+    } catch (error) {
+      showNotification(`Erro ao verificar M3U: ${error.message}`, "error");
+      checkM3UBtn.classList.add("inactive");
+      checkM3UBtn.classList.remove("active");
+    }
+    
+    checkM3UBtn.disabled = false;
+    checkM3UBtn.textContent = "🔍 Verificar M3U";
+    checkM3UBtn.classList.remove("checking");
+  }
+  
+  // Função para iniciar teste
+  async function iniciarTeste() {
+    if (isRunning) return;
+    
+    soundStart.currentTime = 0;
+    soundStart.play();
+
+    if (!fileInput.files.length) {
+      showNotification("Selecione ao menos um arquivo TXT com servidores.", "error");
+      return;
+    }
+    const m3uUrl = m3uInput.value.trim();
+    if (!m3uUrl) {
+      showNotification("Informe o link M3U contendo usuário e senha.", "error");
+      return;
+    }
+    const info = extrairUserPass(m3uUrl);
+    if (!info) {
+      showNotification("URL M3U inválida ou faltando usuário/senha.", "error");
+      return;
+    }
+
+    username = info.user;
+    password = info.pass;
+    hostname = info.hostname;
+
+    validServers = [];
+    testedServers = 0;
+    totalServers = 0;
+    isRunning = true;
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    validListDiv.innerHTML = '<div class="panel-header">🔍 Iniciando varredura de painéis...</div>';
+    progressDiv.textContent = "Preparando para testar...";
+
+    showNotification("Iniciando varredura de painéis...", "info");
+
+    const servidores = await lerServidores(fileInput.files);
+    totalServers = servidores.length;
+
+    if (totalServers === 0) {
+      showNotification("Nenhum servidor válido encontrado nos arquivos.", "error");
+      resetUI();
+      return;
+    }
+
+    progressDiv.textContent = `Testando 0/${totalServers} servidores...`;
+    showNotification(`Iniciando teste em ${totalServers} servidores...`, "info");
+
+    const concorrencia = parseInt(speedSelect.value, 10) || 10;
+    let index = 0;
+
+    async function worker() {
+      while (index < totalServers && isRunning) {
+        const i = index++;
+        const server = servidores[i];
+        const expDate = await testarServidor(server, username, password);
+        testedServers++;
+
+        if (expDate) {
+          validServers.push({ server, expDate });
+          soundScan.currentTime = 0;
+          soundScan.play();
+        }
+        
+        progressDiv.textContent = `Testados: ${testedServers}/${totalServers} | Válidos: ${validServers.length}`;
+        atualizarListaValidos();
+        
+        if (!isRunning) break;
+      }
+    }
+
+    const workers = [];
+    for (let i = 0; i < concorrencia; i++) {
+      workers.push(worker());
+    }
+
+    await Promise.all(workers);
+
+    if (isRunning) {
+      progressDiv.textContent = `✅ Varredura concluída! Testados: ${testedServers}/${totalServers} | Válidos: ${validServers.length}`;
+      showNotification(`Varredura concluída! ${validServers.length} painéis válidos encontrados.`, "success");
+      soundSuccess.currentTime = 0;
+      soundSuccess.play();
+    } else {
+      progressDiv.textContent = `⏸️ Varredura interrompida. Testados: ${testedServers}/${totalServers} | Válidos: ${validServers.length}`;
+      showNotification("Varredura interrompida pelo usuário.", "warning");
+    }
+    
+    isRunning = false;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  }
+  
+  // Função para parar teste
+  function pararTeste() {
+    if (!isRunning) return;
+    
+    soundClick.currentTime = 0;
+    soundClick.play();
+    
+    isRunning = false;
+    stopBtn.disabled = true;
+    startBtn.disabled = false;
+    progressDiv.textContent += " (Parando...)";
+    showNotification("Parando varredura...", "warning");
+  }
+  
+  // Função para resetar UI
+  function resetUI() {
+    isRunning = false;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    copyBtn.disabled = true;
+    downloadBtn.disabled = true;
+    progressDiv.textContent = "";
+    validListDiv.innerHTML = '<div class="panel-header">🔍 Aguardando início da varredura...</div>';
+    validServers = [];
+    testedServers = 0;
+    totalServers = 0;
+  }
+  
+  // Event listeners
+  startBtn.addEventListener("click", iniciarTeste);
+  stopBtn.addEventListener("click", pararTeste);
+  copyBtn.addEventListener("click", copiarResultado);
+  downloadBtn.addEventListener("click", baixarResultado);
+  
+  checkM3UBtn.addEventListener("click", () => {
+    const url = m3uInput.value.trim();
+    if (!url) {
+      showNotification("Informe um link M3U para verificar.", "error");
+      return;
+    }
+    verificarM3U(url);
+  });
+  
+  // Efeito de digitação no título
+  setTimeout(() => {
+    document.querySelector('.typing-effect').style.animation = 'none';
+    setTimeout(() => {
+      document.querySelector('.typing-effect').style.animation = '';
+    }, 10);
+  }, 3500);
+  </script>
+</body>
+</html>
